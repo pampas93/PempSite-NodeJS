@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON Validate</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    
+    <h1>Validate my JSON</h1>
+    <br><br>
+    <form id="jsonUpload" method="post" action="/validate">
+        <div class="form-group">
+            <label for="json">Enter Json:</label>
+            <textarea class="form-control" id="json" rows="20" name="jsontextarea"><%= json %></textarea>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Submit"/>
+            <h2><%= status %></h2>
+
+    </div>
+  </body>
+</html>
