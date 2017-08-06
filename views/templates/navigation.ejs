@@ -10,6 +10,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <% var isActive = "temp"%> 
+        <!--Check data var from inocming page and set active or not -->
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
 
@@ -26,7 +28,10 @@
         <!-- Items  navbar-collapse makes all the items inside div to be hidden when screen minimizes-->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
-                <li class="">           <!-- can make class="active" but that barItem will be highlighted -->
+                <% if(data == "validatePage"){
+                    isActive = "active"; 
+                } %>
+                <li class= <%= isActive%>>           <!-- can make class="active" but that barItem will be highlighted -->
                     <a href="/validate">
                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;
                         Validate JSON

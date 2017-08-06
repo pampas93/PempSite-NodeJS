@@ -11,7 +11,7 @@ router.post('/', function(req, res, next){
 
   var validity = isJson(jsonString);
   try{
-    jsonString = JSON.stringify(eval("(" + jsonString + ")"), null, "\t");
+    jsonString = JSON.stringify(eval("(" + jsonString + ")"), null, "\t");  //To display json in proper indenting
   }catch(e){
       
   }

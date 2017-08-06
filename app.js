@@ -4,12 +4,29 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mysql = require('mysql');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var val = require('./routes/validate');
 
 var app = express();
+
+// var sqlConnection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'plotify'
+// });
+
+// sqlConnection.connect(function(error) {
+//   if(!!error){
+//     console.log("Error connection");
+//   }else{
+//     console.log("Conencted to Database");
+//   }
+
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
