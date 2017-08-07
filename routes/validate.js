@@ -9,11 +9,15 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next){
   var jsonString = req.body.jsontextarea;
 
-  var validity = isJson(jsonString);
-  try{
+  var validity = "";
+  if(isJson(jsonString)){
+    validity = "Valid Json! Woot woot";
+    
+    try{
     jsonString = JSON.stringify(eval("(" + jsonString + ")"), null, "\t");  //To display json in proper indenting
-  }catch(e){
-      
+    }catch(e){ }
+  }else{
+    validity = "Sorry, not a valid json";
   }
   
   res.render('validate', { status: validity, json: jsonString });
@@ -24,10 +28,10 @@ function isJson(data) {
 		JSON.parse(data);
 	} catch (e) {
 		//alert("Not a Valid JSON String");
-		return "Sorry, not Valid!";
+		return false;
 	}
     //alert("Valid Json")
-    return "Valid!";
+    return true;
 }
 
 

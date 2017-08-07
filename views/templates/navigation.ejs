@@ -37,8 +37,11 @@
                         Validate JSON
                     </a>
                 </li>
-                <li class="">
-                    <a href="#">
+                <% if(data == "graphPage"){
+                    isActive = "active"; 
+                } %>
+                <li class= <%= isActive%>>
+                    <a href="/graphs">
                         <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;
                         Graph me
                     </a>
