@@ -22,11 +22,12 @@
 
     <form id="getChart" method="post" action="/mychart">
         <div class="form-group">
+          <textarea class="form-control" id="jsondata" rows="2" name="jsontext" style="display:none;"><%= json %></textarea>
           <% var graphTypes = graphs.split("$");
             for(var temp in graphTypes){
             console.log(graphTypes[temp]); %>
           <div class="radio">
-            <label><input type="radio" name="<%= graphTypes[temp] %>"><%= graphTypes[temp] %></label>
+            <label><input type="radio" name="graphType" value="<%= graphTypes[temp] %>"><%= graphTypes[temp] %></label>
           </div>
           <% } %>
           <input class="btn btn-primary" type="submit" value="Submit"/>

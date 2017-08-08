@@ -10,7 +10,6 @@ var sqlConnection = mysql.createPool({
   database: 'plotify'
 });
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('graphs', {status: '', json : '', graphs: '' });
 });
@@ -19,9 +18,7 @@ router.post('/', function(req, res, next){
 
   var jsonString = req.body.datatextarea;
   var validity = "";
-
   var querying = false;
-
   var compatibleGraphs = [];
 
   if(isJson(jsonString)){

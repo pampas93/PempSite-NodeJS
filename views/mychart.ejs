@@ -3,10 +3,28 @@
   <head>
     <title>My Chart</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/BarType1.css' />
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  
   </head>
   <body>
     <% var data= "myChartPage" %>  
     <% include templates/navigation.ejs %>
     <h1>This is My chart page </h1>
+    
+    <p id="data" style="display:none;">
+      <%= jsonData %>
+    </p>
+
+    <p id="items" style="display:none;">
+      <%= axis %>
+    </p>
+    
+    <div>
+	    <script type="text/javascript" src="/javascripts/BarType1.js"></script>
+    </div>
+
   </body>
 </html>
