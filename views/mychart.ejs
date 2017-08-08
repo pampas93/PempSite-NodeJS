@@ -12,7 +12,7 @@
   <body>
     <% var data= "myChartPage" %>  
     <% include templates/navigation.ejs %>
-    <h1>This is My chart page </h1>
+    <h2><%= ChartTitle%> </h2>
     
     <p id="data" style="display:none;">
       <%= jsonData %>
@@ -23,7 +23,7 @@
     </p>
     
     <div>
-	    <script type="text/javascript" src="/javascripts/BarType1.js"></script>
+	    <script type="text/javascript" src=" <%= jsFile%> "></script>
     </div>
 
   </body>

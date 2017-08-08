@@ -19,7 +19,7 @@
         </div>
     </form>
     <h3>Status: <%= status %></h3><br>
-
+    <% if(compatibility) { %>
     <form id="getChart" method="post" action="/mychart">
         <div class="form-group">
           <textarea class="form-control" id="jsondata" rows="2" name="jsontext" style="display:none;"><%= json %></textarea>
@@ -33,6 +33,7 @@
           <input class="btn btn-primary" type="submit" value="Submit"/>
         </div>
     </form>
+    <% } %>
     
   </body>
 </html>

@@ -11,7 +11,7 @@ var sqlConnection = mysql.createPool({
 });
 
 router.get('/', function(req, res, next) {
-  res.render('graphs', {status: '', json : '', graphs: '' });
+  res.render('graphs', {status: '', json : '', graphs: '', compatibility: false });
 });
 
 router.post('/', function(req, res, next){
@@ -84,7 +84,10 @@ router.post('/', function(req, res, next){
                                 //console.log(validity);
                             }
 
-                            res.render('graphs', { status: validity, json: jsonString, graphs: graphNames });
+                            res.render('graphs', { status: validity, 
+                                json: jsonString, 
+                                graphs: graphNames, 
+                                compatibility: true });
 
                         });
                         
@@ -112,10 +115,38 @@ router.post('/', function(req, res, next){
   }
 
   if(!querying){
-    console.log("Oder!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    res.render('graphs', { status: validity, json: jsonString, graphs: '' });
+    res.render('graphs', { status: validity, 
+        json: jsonString, 
+        graphs: '',
+        compatibility: false });
   }
 });
+
+// router.post('/myChart', function(req, res, next){
+
+//     var selectedGraph = req.body.graphType;
+//     var dataString = req.body.jsontext;
+
+//     var dict = {'x' : "", 'y': ""};
+
+//     if(isJson(dataString)){
+//         var data = JSON.parse(dataString);
+
+//         for(var obj in data){
+//             var arrayTemp = Object.keys(data[obj]);
+//             dict['x'] = arrayTemp[0];
+//             dict['y'] = arrayTemp[1];
+//             break;
+//         }
+        
+//     }else{
+        
+//     }
+//     console.log(dict);
+    
+//     res.render('mychart', {jsonData: dataString, axis: JSON.stringify(dict)});
+
+// });
 
 
 module.exports = router;
