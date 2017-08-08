@@ -10,7 +10,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <% var isActive = "temp"%> 
+    <%  var graphsIsActive = "";
+        var validateIsActive = ""
+    %> 
         <!--Check data var from inocming page and set active or not -->
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -29,18 +31,18 @@
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
                 <% if(data == "validatePage"){
-                    isActive = "active"; 
+                    validateIsActive = "active"; 
                 } %>
-                <li class= <%= isActive%>>           <!-- can make class="active" but that barItem will be highlighted -->
+                <li class= <%= validateIsActive%>>           <!-- can make class="active" but that barItem will be highlighted -->
                     <a href="/validate">
                         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;
                         Validate JSON
                     </a>
                 </li>
                 <% if(data == "graphPage"){
-                    isActive = "active"; 
+                    graphsIsActive = "active"; 
                 } %>
-                <li class= <%= isActive%>>
+                <li class= <%= graphsIsActive%>>
                     <a href="/graphs">
                         <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;
                         Graph me

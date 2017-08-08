@@ -12,7 +12,7 @@ var sqlConnection = mysql.createPool({
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('graphs', {status: '', json : '' });
+  res.render('graphs', {status: '', json : '', graphs: '' });
 });
 
 router.post('/', function(req, res, next){
@@ -56,6 +56,8 @@ router.post('/', function(req, res, next){
                         tempCont.query('SELECT * FROM graphtemplates WHERE Depth = ? AND PropertyCount = ?',[depth, propCount], function(error, rows, fields){
                             tempCont.release();
 
+                            var graphNames = '';
+
                             if(error){
                                 console.log("Error while Querying form database");
                                 validity = "Error while Querying form database";
@@ -66,7 +68,7 @@ router.post('/', function(req, res, next){
                                     var rowType = rows[i].TypeCount;
                                     
                                     if(graph_compatible(JSON.parse(rowType), dataTypeDict)){
-                                        console.log(rows[i].Graph_Name);
+                                        //console.log(rows[i].Graph_Name);
                                         compatibleGraphs.push(rows[i].Graph_Name);
                                     }
                                 }
@@ -74,16 +76,18 @@ router.post('/', function(req, res, next){
                                 if(compatibleGraphs.length == 0)
                                     validity = "No Compatible graphs; we'll expand our horizon soon";
                                 else{
-                                    validity = "Compatible graphs: \n";
+                                    validity = "Found Compatible graphs.";
                                     for(var g in compatibleGraphs)
-                                        validity +=  compatibleGraphs[g] + "\n";
+                                        graphNames +=  compatibleGraphs[g] + "$";
+
+                                    graphNames = graphNames.slice(0,-1);    //Removing the last character ($)
 
                                 }
 
-                                console.log(validity);
+                                //console.log(validity);
                             }
 
-                            res.render('graphs', { status: validity, json: jsonString });
+                            res.render('graphs', { status: validity, json: jsonString, graphs: graphNames });
 
                         });
                         
@@ -112,17 +116,15 @@ router.post('/', function(req, res, next){
 
   if(!querying){
     console.log("Oder!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    res.render('graphs', { status: validity, json: jsonString });
+    res.render('graphs', { status: validity, json: jsonString, graphs: '' });
   }
 });
 
 
 module.exports = router;
 
-function QueryFromDB(depth, propertycount, typeDict){
 
-}
-
+//Takes the dataTypes of user data and fetched data from db and checks for compatibility
 function graph_compatible(rowType, userType){
 
     if(Object.keys(rowType).length != Object.keys(userType).length)

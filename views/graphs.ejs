@@ -16,8 +16,22 @@
             <textarea class="form-control" id="jsondata" rows="20" name="datatextarea"><%= json %></textarea>
             <br>
             <input class="btn btn-primary" type="submit" value="Submit"/>
-            <h2><%= status %></h2>
+        </div>
+    </form>
+    <h3>Status: <%= status %></h3><br>
 
-    </div>
+    <form id="getChart" method="post" action="/mychart">
+        <div class="form-group">
+          <% var graphTypes = graphs.split("$");
+            for(var temp in graphTypes){
+            console.log(graphTypes[temp]); %>
+          <div class="radio">
+            <label><input type="radio" name="<%= graphTypes[temp] %>"><%= graphTypes[temp] %></label>
+          </div>
+          <% } %>
+          <input class="btn btn-primary" type="submit" value="Submit"/>
+        </div>
+    </form>
+    
   </body>
 </html>
