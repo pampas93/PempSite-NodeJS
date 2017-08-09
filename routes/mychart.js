@@ -22,12 +22,14 @@ router.post('/', function(req, res, next){
             res.render('mychart', {ChartTitle: selectedGraph,
                 jsonData: dataString, 
                 axis: JSON.stringify(returnData["axis"]), 
-                jsFile: returnData["jsFile"]});
+                jsFile: returnData["jsFile"],
+                cssFile: returnData["cssFile"]});
         }else{
            res.render('mychart', {ChartTitle: "Sorry, Still working on this chart.",
                 jsonData: "", 
                 axis: "", 
-                jsFile: ""});
+                jsFile: "",
+                cssFile: ""});
         }
 
         
@@ -35,7 +37,8 @@ router.post('/', function(req, res, next){
         res.render('mychart', {ChartTitle: "Sorry, Json data wasn't valid.",
                 jsonData: "", 
                 axis: "", 
-                jsFile: ""});
+                jsFile: "",
+                cssFile: ""});
     }
 
 });
@@ -44,35 +47,90 @@ function FindChartDetails(selectedGraph, jsonData){
 
     //Need to fill this dictionary every chart is added;    Later, Need to put this dictionary to the database;
     //And create new case in switch.
-    var MainChartDictionary = {"Bar Graph (type 1)":"/javascripts/BarType1.js",     
+    var MainChartDictionary = {"Bar Graph (type 1)":"/javascripts/BarType1.js",
+        "Stack Bar Graph with 1 (type 1)":"/javascripts/StackBarType.js", 
+        "Stack Bar Graph with 2 (type 1)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 3 (type 1)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 4 (type 1)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 5 (type 1)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 6 (type 1)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 1 (type 2)":"/javascripts/StackBarType.js", 
+        "Stack Bar Graph with 2 (type 2)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 3 (type 2)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 4 (type 2)":"/javascripts/StackBarType.js",
+        "Stack Bar Graph with 5 (type 2)":"/javascripts/StackBarType.js"          
     };
 
     var returnData = {};
 
-    switch(selectedGraph){
-        case "Bar Graph (type 1)":
+    var temp = selectedGraph.substring(0,15);   //Only for Stack Bar Graph sake;
 
-            var dict = {'x' : "", 'y': ""};
-            for(var obj in jsonData){
-                var arrayTemp = Object.keys(jsonData[obj]);
-                dict['x'] = arrayTemp[0];
-                dict['y'] = arrayTemp[1];
+    if(selectedGraph == "Bar Graph (type 1)"){
+
+        var dict = {'x' : "", 'y': ""};
+        for(var obj in jsonData){
+            var arrayTemp = Object.keys(jsonData[obj]);
+            dict['x'] = arrayTemp[0];
+            dict['y'] = arrayTemp[1];
             break;
-            }
+        }
             
-            returnData["axis"] = dict;
-            returnData["jsFile"] = MainChartDictionary[selectedGraph];
+        returnData["axis"] = dict;
+        returnData["jsFile"] = MainChartDictionary[selectedGraph];
 
+        var temp = MainChartDictionary[selectedGraph];
+        var cssFile = "/stylesheets/" + temp.substring(13, temp.length-3) + ".css";
+
+        returnData["cssFile"] = cssFile;
+
+    }else if(temp == "Stack Bar Graph" ){
+
+        var dict = [];
+        for(var obj in jsonData){
+            dict = Object.keys(jsonData[obj]);
             break;
-        default:
-            //Graph is not added yet
+        }
+        dict.shift();   //Removes the first element
 
-            returnData["axis"] = null;
-            returnData["jsFile"] = null;
+        returnData["axis"] = dict;
+        returnData["jsFile"] = MainChartDictionary[selectedGraph];
 
-            
-            break;
+        var temp = MainChartDictionary[selectedGraph];
+        var cssFile = "/stylesheets/" + temp.substring(13, temp.length-3) + ".css";
+
+        returnData["cssFile"] = cssFile;
+
+    }else{
+        //Graph is not added yet
+        returnData["axis"] = null;
+        returnData["jsFile"] = null;
+        returnData["cssFile"] = null;
     }
+
+    // switch(selectedGraph){
+    //     case "Bar Graph (type 1)":
+
+    //         var dict = {'x' : "", 'y': ""};
+    //         for(var obj in jsonData){
+    //             var arrayTemp = Object.keys(jsonData[obj]);
+    //             dict['x'] = arrayTemp[0];
+    //             dict['y'] = arrayTemp[1];
+    //         break;
+    //         }
+            
+    //         returnData["axis"] = dict;
+    //         returnData["jsFile"] = MainChartDictionary[selectedGraph];
+
+    //         break;
+    //     default:
+    //         //Graph is not added yet
+
+    //         returnData["axis"] = null;
+    //         returnData["jsFile"] = null;
+
+            
+    //         break;
+    // }
 
     return returnData;
 

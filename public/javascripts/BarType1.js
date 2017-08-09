@@ -25,7 +25,7 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>"+items.y+":</strong> <span style='color:red'>" + d[items.y] + "</span>";
+    return "<strong>"+axisItems.y+":</strong> <span style='color:red'>" + d[axisItems.y] + "</span>";
   })
 
 var svg = d3.select("body").append("svg")
@@ -38,13 +38,11 @@ svg.call(tip);
 
 var data = JSON.parse(document.getElementById('data').innerHTML);
 
-var items = JSON.parse(document.getElementById('items').innerHTML);
+var axisItems = JSON.parse(document.getElementById('axis').innerHTML);
 
-//console.log(typeof items["x"]);  //same as items.x
-//console.log(data.map(function(d) { var i = items.x;  console.log(d[i])}));
 
-  x.domain(data.map(function(d) {return d[items.x]; }));
-  y.domain([0, d3.max(data, function(d) { return d[items.y]; })]);
+  x.domain(data.map(function(d) {return d[axisItems.x]; }));
+  y.domain([0, d3.max(data, function(d) { return d[axisItems.y]; })]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -59,16 +57,16 @@ var items = JSON.parse(document.getElementById('items').innerHTML);
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text(items.y);
+      .text(axisItems.y);
 
   svg.selectAll(".bar")
       .data(data)
     .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) { return x(d[items.x]); })
+      .attr("x", function(d) { return x(d[axisItems.x]); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d[items.y]); })
-      .attr("height", function(d) { return height - y(d[items.y]); })
+      .attr("y", function(d) { return y(d[axisItems.y]); })
+      .attr("height", function(d) { return height - y(d[axisItems.y]); })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
 }

@@ -1,0 +1,5 @@
+Check:
+All numbers excluding the year(if it has to be on X axis) should be without quotes
+All integer numbers must not start with 0; Ex: 05 should be 5;
+
+Please use Jsonlint.com if data is not valid;

@@ -3,7 +3,7 @@
   <head>
     <title>My Chart</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/BarType1.css' />
+    <link rel='stylesheet' href="<%= cssFile %>" />
 
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
@@ -18,7 +18,7 @@
       <%= jsonData %>
     </p>
 
-    <p id="items" style="display:none;">
+    <p id="axis" style="display:none;">
       <%= axis %>
     </p>
     
