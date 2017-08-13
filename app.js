@@ -26,11 +26,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(async (req, res, next) => {
+  if (! app.db) {
+    const mysql = require('mysql2/promise');
+    app.db = await mysql.createPool({
+      connectionLimit: 50,
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'plotify' });
+  }
+  req.db = app.db;
+  return next();
+});
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/validate', val);
 app.use('/graphs',graphs);
 app.use('/mychart', mychart)
+
+//app.listen(3000);                                             //Need to remove later. Only for debugging purpose, so I can run program from node app.js command
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

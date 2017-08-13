@@ -1,153 +1,108 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
+var mysql = require('mysql2');
 
-var sqlConnection = mysql.createPool({
-  connectionLimit: 50,
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'plotify'
-});
 
 router.get('/', function(req, res, next) {
   res.render('graphs', {status: '', json : '', graphs: '', compatibility: false });
 });
 
-router.post('/', function(req, res, next){
+
+router.post('/', async function(req, res) {         //Using async function because I use await in query call
 
   var jsonString = req.body.datatextarea;
-  var validity = "";
   var querying = false;
-  var compatibleGraphs = [];
 
-  if(isJson(jsonString)){
+  if(!isJson(jsonString)){
 
-      var jsonObject = JSON.parse(jsonString);
-      //console.log(typeof json);
-
-      var depth = Depth(jsonObject);
-      //console.log(depth);
-
-      if(depth == 1){
-          var propCount = propertyCount(jsonObject);
-
-          if(propCount != -1){
-              //console.log(propCount);
-              var dataTypeDict = TypeCount(jsonObject)
-
-              if(dataTypeDict != -1){
-                //Query here to db and check.
-                querying = true;
-
-                sqlConnection.getConnection(function(error, tempCont){
-                    if(error){
-                        tempCont.release();
-                        console.log("Error connecting to DB");
-                        validity = "Error connecting to Database; Try again later";
-                    }else{
-                        console.log("Success, connected to DB");
-                        
-                        //var query = "SELECT * FROM graphtemplates WHERE Depth = " + toString(depth)+ " AND PropertyCount = " + toString(propCount);
-
-                        tempCont.query('SELECT * FROM graphtemplates WHERE Depth = ? AND PropertyCount = ?',[depth, propCount], function(error, rows, fields){
-                            tempCont.release();
-
-                            var graphNames = '';
-
-                            if(error){
-                                console.log("Error while Querying form database");
-                                validity = "Error while Querying form database";
-                            }else{
-                                //validity = "Query done from DB";
-                                for (var i = 0; i < rows.length; i++){
-                                    
-                                    var rowType = rows[i].TypeCount;
-                                    
-                                    if(graph_compatible(JSON.parse(rowType), dataTypeDict)){
-                                        //console.log(rows[i].Graph_Name);
-                                        compatibleGraphs.push(rows[i].Graph_Name);
-                                    }
-                                }
-
-                                if(compatibleGraphs.length == 0)
-                                    validity = "No Compatible graphs; we'll expand our horizon soon";
-                                else{
-                                    validity = "Found Compatible graphs.";
-                                    for(var g in compatibleGraphs)
-                                        graphNames +=  compatibleGraphs[g] + "$";
-
-                                    graphNames = graphNames.slice(0,-1);    //Removing the last character ($)
-
-                                }
-
-                                //console.log(validity);
-                            }
-
-                            res.render('graphs', { status: validity, 
-                                json: jsonString, 
-                                graphs: graphNames, 
-                                compatibility: true });
-
-                        });
-                        
-                    }
-                });
-
-              }else{
-                  validity = "Property datatype count not consistent";
-              }
-
-          }else{
-              validity = "Property count not Consistent";
-          }
-      }else{
-          validity = "Sorry, we support only depth = 1";
-      }
-
-    // Only used to indent it properly.
-    try{
-    jsonString = JSON.stringify(eval("(" + jsonString + ")"), null, "\t");  //To display json in proper indenting
-    }catch(e){ }
-
-  }else{
-      validity = "Sorry, Data should be a valid json";
-  }
-
-  if(!querying){
-    res.render('graphs', { status: validity, 
+    res.render('graphs', { status: "Sorry, Data should be a valid json", 
         json: jsonString, 
         graphs: '',
         compatibility: false });
+  }else{
+    
+    var jsonObject = JSON.parse(jsonString);
+    jsonString = JSON.stringify(eval("(" + jsonString + ")"), null, "\t");  //To display json in proper indenting
+    var depth = Depth(jsonObject);
+
+    if(depth != 1){
+      
+      res.render('graphs', { status: "Sorry, we support only depth = 1", 
+        json: jsonString, 
+        graphs: '',
+        compatibility: false });
+
+    }else{
+      var propCount = propertyCount(jsonObject);
+
+      if(propCount == -1){
+
+        res.render('graphs', { status: "No Compatible graphs; we'll expand our horizon soon (PropertyCount)", 
+          json: jsonString, 
+          graphs: '',
+          compatibility: false });
+
+      }else{
+        var dataTypeDict = TypeCount(jsonObject)
+
+        if(dataTypeDict == -1){
+
+          res.render('graphs', { status: "No Compatible graphs; we'll expand our horizon soon (TypeCount)", 
+            json: jsonString, 
+            graphs: '',
+            compatibility: false });
+
+        }else{
+
+          var status = '';
+          var graphNames = '';
+          var availability = false;
+
+          try{
+            let [ queryRows, queryFields ] = await req.db.query('SELECT * FROM graphtemplates WHERE Depth = ? AND PropertyCount = ?',[depth, propCount]);
+
+            var compatibleGraphs = [];
+            for(var i=0; i<queryRows.length; i++){
+
+              var rowType = queryRows[i].TypeCount;
+
+              if(graph_compatible(JSON.parse(rowType), dataTypeDict)){
+                //console.log(rows[i].Graph_Name);
+                compatibleGraphs.push(queryRows[i].Graph_Name);
+              }            
+            }
+
+            //console.log(compatibleGraphs);
+            if(compatibleGraphs.length == 0){
+
+              status = "No Compatible graphs; we'll expand our horizon soon";
+              availability = false;
+            }else{
+
+              status = "Found Compatible Graphs";
+              availability = true;
+
+            for(var g in compatibleGraphs){
+              graphNames += compatibleGraphs[g] + "$";    //Storing all graphs in one string seperated by $, so later I can split and get back array.
+            }
+
+            graphNames = graphNames.slice(0,-1);          //Removing the last character ($)
+            }
+          }
+          catch(e){
+
+            status = "Couldn't connect or query from DB. Try again later";
+
+          }
+           res.render('graphs', { status: status, 
+            json: jsonString, 
+            graphs: graphNames, 
+            compatibility: availability });
+        }
+      }
+    }
   }
 });
-
-// router.post('/myChart', function(req, res, next){
-
-//     var selectedGraph = req.body.graphType;
-//     var dataString = req.body.jsontext;
-
-//     var dict = {'x' : "", 'y': ""};
-
-//     if(isJson(dataString)){
-//         var data = JSON.parse(dataString);
-
-//         for(var obj in data){
-//             var arrayTemp = Object.keys(data[obj]);
-//             dict['x'] = arrayTemp[0];
-//             dict['y'] = arrayTemp[1];
-//             break;
-//         }
-        
-//     }else{
-        
-//     }
-//     console.log(dict);
-    
-//     res.render('mychart', {jsonData: dataString, axis: JSON.stringify(dict)});
-
-// });
-
 
 module.exports = router;
 
@@ -171,15 +126,14 @@ function graph_compatible(rowType, userType){
     return true;
 }
 
-
 //Checks if string in json format
 function isJson(data) {
-	try {
-		JSON.parse(data);
-	} catch (e) {
-		//alert("Not a Valid JSON String");
-		return false;
-	}
+  try {
+    JSON.parse(data);
+  } catch (e) {
+    //alert("Not a Valid JSON String");
+    return false;
+  }
     //alert("Valid Json")
     return true;
 }
