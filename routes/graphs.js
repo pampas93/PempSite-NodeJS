@@ -13,12 +13,15 @@ router.post('/', async function(req, res) {         //Using async function becau
   var jsonString = req.body.datatextarea;
   var querying = false;
 
+  var availability = false;
+  var stat = "";
+  var graphNames = '';
+
   if(!isJson(jsonString)){
 
-    res.render('graphs', { status: "Sorry, Data should be a valid json", 
-        json: jsonString, 
-        graphs: '',
-        compatibility: false });
+    stat = "Sorry, Data should be a valid json";
+    availability = false;
+
   }else{
     
     var jsonObject = JSON.parse(jsonString);
@@ -26,37 +29,27 @@ router.post('/', async function(req, res) {         //Using async function becau
     var depth = Depth(jsonObject);
 
     if(depth != 1){
-      
-      res.render('graphs', { status: "Sorry, we support only depth = 1", 
-        json: jsonString, 
-        graphs: '',
-        compatibility: false });
+
+      stat = "Sorry, we support only depth = 1";
+      availability = false;
 
     }else{
       var propCount = propertyCount(jsonObject);
 
       if(propCount == -1){
 
-        res.render('graphs', { status: "No Compatible graphs; we'll expand our horizon soon (PropertyCount)", 
-          json: jsonString, 
-          graphs: '',
-          compatibility: false });
+        stat = "No Compatible graphs; we'll expand our horizon soon (PropertyCount)";
+        availability = false;
 
       }else{
         var dataTypeDict = TypeCount(jsonObject)
 
         if(dataTypeDict == -1){
 
-          res.render('graphs', { status: "No Compatible graphs; we'll expand our horizon soon (TypeCount)", 
-            json: jsonString, 
-            graphs: '',
-            compatibility: false });
+          stat = "No Compatible graphs; we'll expand our horizon soon (TypeCount)";
+          availability = false;
 
         }else{
-
-          var status = '';
-          var graphNames = '';
-          var availability = false;
 
           try{
             let [ queryRows, queryFields ] = await req.db.query('SELECT * FROM graphtemplates WHERE Depth = ? AND PropertyCount = ?',[depth, propCount]);
@@ -75,11 +68,11 @@ router.post('/', async function(req, res) {         //Using async function becau
             //console.log(compatibleGraphs);
             if(compatibleGraphs.length == 0){
 
-              status = "No Compatible graphs; we'll expand our horizon soon";
+              stat = "No Compatible graphs; we'll expand our horizon soon";
               availability = false;
             }else{
 
-              status = "Found Compatible Graphs";
+              stat = "Found Compatible Graphs";
               availability = true;
 
             for(var g in compatibleGraphs){
@@ -91,17 +84,20 @@ router.post('/', async function(req, res) {         //Using async function becau
           }
           catch(e){
 
-            status = "Couldn't connect or query from DB. Try again later";
+            stat = "Couldn't connect or query from DB. Try again later";
+            availability = false;
 
-          }
-           res.render('graphs', { status: status, 
-            json: jsonString, 
-            graphs: graphNames, 
-            compatibility: availability });
-        }
+          } //end of catch
+        } //end of else (query)
       }
     }
   }
+
+  //execution will come here no matter what.
+  res.render('graphs', { status: stat, 
+        json: jsonString, 
+        graphs: graphNames,
+        compatibility: availability });
 });
 
 module.exports = router;
