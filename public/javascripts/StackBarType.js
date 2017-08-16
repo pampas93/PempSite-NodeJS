@@ -69,10 +69,12 @@ var xAxis = d3.svg.axis()
   .orient("bottom")
 
 svg.append("g")
+  .style("font-size","14px")
   .attr("class", "y axis")
   .call(yAxis);
 
 svg.append("g")
+  .style("font-size","20px")
   .attr("class", "x axis")
   .attr("transform", "translate(0," + height + ")")
   .call(xAxis);

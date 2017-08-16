@@ -13,6 +13,7 @@ var mychart = require('./routes/mychart');
 var collection = require('./routes/graphCollection');
 
 var BarTemplate1 = require('./routes/GraphSamplesRoutes/BarTemplate1');
+var StackBarTemplate = require('./routes/GraphSamplesRoutes/StackBarTemplate');
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use('/mychart', mychart)
 app.use('/graphCollection', collection )
 
 app.use('/GraphSamples/BarTemplate1', BarTemplate1);
+app.use('/GraphSamples/StackBarTemplate', StackBarTemplate);
 
 //app.listen(3000);                                             //Need to remove later. Only for debugging purpose, so I can run program from node app.js command
 

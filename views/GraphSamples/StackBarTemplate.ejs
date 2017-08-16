@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/StackBarType.css' />
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <style>
+        div.insideContainer {
+            border: 1px solid #ccc;
+            background-color: #f3f3f3;
+            height: 700px;
+        }
+
+        .TabClass {
+            margin-top: 45px;
+        }
+
+        #DataContainer {
+            height: 90%;
+            margin: 25px 50px 25px 50px;
+        }
+
+        li {
+            margin-bottom: 1em;
+        }
+    </style>
+
+</head>
+
+<body>
+    <% var data= "StackBar-Template" %>
+        <% include ../templates/navigation.ejs %>
+
+            <ul class="nav nav-tabs" style="text-align:center; margin-top: 50px; padding:10px; font-size: 1.2em;">
+                <li class="active" id="GraphTab" style=" float:none;display:inline-block; padding:5px;"><a href="#"><b>Graph Template</b></a></li>
+                <li id="DataTab" style=" float:none;display:inline-block; padding:5px;"><a href="#"><b>Sample Data</b></a></li>
+                <li id="ConditionTab" style=" float:none;display:inline-block; padding:5px;"><a href="#"><b>Data Restrictions</b></a></li>
+            </ul>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1 col-lg-2">
+
+                    </div>
+                    <div class="col-sm-10 col-md-10 col-lg-8">
+                        <div class="insideContainer">
+
+                            <div class="GraphClass TabClass text-center">
+                                <script type="text/javascript">
+                                    var data = [{
+                                        "Name": "John",
+                                        "Running": 30,
+                                        "Swimming": 5,
+                                        "Cycling": 25
+                                    },
+                                    {
+                                        "Name": "May",
+                                        "Running": 25,
+                                        "Swimming": 20,
+                                        "Cycling": 10
+                                    },
+                                    {
+                                        "Name": "Pemp",
+                                        "Running": 40,
+                                        "Swimming": 0,
+                                        "Cycling": 50
+                                    },
+                                    {
+                                        "Name": "Sunu",
+                                        "Running": 25,
+                                        "Swimming": 40,
+                                        "Cycling": 30
+                                    },
+                                    {
+                                        "Name": "Toby",
+                                        "Running": 30,
+                                        "Swimming": 20,
+                                        "Cycling": 30
+                                    },
+                                    {
+                                        "Name": "Antis",
+                                        "Running": 40,
+                                        "Swimming": 15,
+                                        "Cycling": 45
+                                    }
+                                    ];
+
+                                    function ForDataTab() {
+                                        var s = JSON.stringify(data);
+                                        var neatJson = JSON.stringify(eval("(" + s + ")"), null, "\t");
+                                        //console.log(neatJson);
+                                        document.getElementById("DataTextArea").value = neatJson;
+                                    }
+                                    window.onload = ForDataTab;
+
+                                    function plotGraph(toShow) {
+                                        if (toShow) {
+
+                                            var margin = {
+                                                top: 20,
+                                                right: 160,
+                                                bottom: 35,
+                                                left: 30
+                                            };
+
+                                            var width = 960 - margin.left - margin.right,
+                                                height = 500 - margin.top - margin.bottom;
+
+                                            var svg = d3.select(".GraphClass")
+                                                .append("svg")
+                                                .attr("width", width + margin.left + margin.right)
+                                                .attr("height", height + margin.top + margin.bottom)
+                                                .append("g")
+                                                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+                                            /* Data in strings like it would be if imported from a csv */
+
+                                            var items = ["Running", "Swimming", "Cycling"];
+
+                                            var colorsDB = ["#b33040", "#d25c4d", "#f2b447", "#d9d574", "#de887c", "#b33040"];
+                                            var colors = [];
+                                            for (i = 0; i < items.length; i++) {
+                                                colors.push(colorsDB[i]);
+                                            }
+
+                                            console.log(colors);
+
+                                            // Transpose the data into layers
+                                            var dataset = d3.layout.stack()(items.map(function (item) {
+                                                return data.map(function (d) {
+                                                    var xT = Object.keys(d)[0]
+                                                    return { x: d[xT], y: +d[item] };
+                                                });
+                                            }));
+
+
+                                            // Set x, y and colors
+                                            var x = d3.scale.ordinal()
+                                                .domain(dataset[0].map(function (d) {
+                                                    return d.x;
+                                                }))
+                                                .rangeRoundBands([10, width - 10], 0.02);
+
+                                            var y = d3.scale.linear()
+                                                .domain([0, d3.max(dataset, function (d) {
+                                                    return d3.max(d, function (d) {
+                                                        return d.y0 + d.y;
+                                                    });
+                                                })])
+                                                .range([height, 0]);
+
+                                            // Define and draw axes
+                                            var yAxis = d3.svg.axis()
+                                                .scale(y)
+                                                .orient("left")
+                                                .ticks(5)
+                                                .tickSize(-width, 0, 0)
+                                                .tickFormat(function (d) {
+                                                    return d
+                                                });
+
+                                            var xAxis = d3.svg.axis()
+                                                .scale(x)
+                                                .orient("bottom")
+
+                                            svg.append("g")
+                                                .style("font-size", "14px")
+                                                .attr("class", "y axis")
+                                                .call(yAxis);
+
+                                            svg.append("g")
+                                                .style("font-size", "20px")
+                                                .attr("class", "x axis")
+                                                .attr("transform", "translate(0," + height + ")")
+                                                .call(xAxis);
+
+
+                                            // Create groups for each series, rects for each segment 
+                                            var groups = svg.selectAll("g.cost")
+                                                .data(dataset)
+                                                .enter().append("g")
+                                                .attr("class", "cost")
+                                                .style("fill", function (d, i) {
+                                                    return colors[i];
+                                                });
+
+                                            var rect = groups.selectAll("rect")
+                                                .data(function (d) {
+                                                    return d;
+                                                })
+                                                .enter()
+                                                .append("rect")
+                                                .attr("x", function (d) {
+                                                    return x(d.x);
+                                                })
+                                                .attr("y", function (d) {
+                                                    return y(d.y0 + d.y);
+                                                })
+                                                .attr("height", function (d) {
+                                                    return y(d.y0) - y(d.y0 + d.y);
+                                                })
+                                                .attr("width", x.rangeBand())
+                                                .on("mouseover", function () {
+                                                    tooltipTemp.style("display", null);
+                                                })
+                                                .on("mouseout", function () {
+                                                    tooltipTemp.style("display", "none");
+                                                })
+                                                .on("mousemove", function (d) {
+                                                    var xPosition = d3.mouse(this)[0] - 15;
+                                                    var yPosition = d3.mouse(this)[1] - 25;
+                                                    tooltipTemp.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                                                    tooltipTemp.select("text").text(d.y);
+                                                });
+
+                                            // Draw legend
+                                            var legend = svg.selectAll(".legend")
+                                                .data(colors)
+                                                .enter().append("g")
+                                                .attr("class", "legend")
+                                                .attr("transform", function (d, i) { return "translate(45," + i * 40 + ")"; });
+
+                                            legend.append("rect")
+                                                .attr("x", width - 35)
+                                                .attr("width", 35)
+                                                .attr("height", 35)
+                                                .style("fill", function (d, i) { return colors.slice()[i]; });
+
+                                            legend.append("text")
+                                                .attr("x", width + 5)
+                                                .attr("y", 9)
+                                                .attr("dy", ".35em")
+                                                .attr("font-size", "14px")
+                                                .attr("font-weight", "bold")
+                                                .style("text-anchor", "start")
+                                                .text(function (d, i) {
+                                                    return items[i];
+                                                });
+
+
+                                            // Prep the tooltipTemp bits, initial display is hidden
+                                            var tooltipTemp = svg.append("g")
+                                                .attr("class", "tooltipTemp")
+                                                .style("display", "none");
+
+                                            tooltipTemp.append("rect")
+                                                .attr("width", 30)
+                                                .attr("height", 20)
+                                                .attr("fill", "white")
+                                                .style("opacity", 0.5);
+
+                                            tooltipTemp.append("text")
+                                                .attr("x", 15)
+                                                .attr("dy", "1.2em")
+                                                .style("text-anchor", "middle")
+                                                .attr("font-size", "14px")
+                                                .attr("font-weight", "bold");
+
+
+                                        }
+                                        else {
+                                            d3.select("svg").remove();
+                                        }
+
+                                    }
+                                </script>
+                            </div>
+
+                            <div class="DataClass TabClass " id="DataContainer">
+                                <textarea readonly class="form-control" id="DataTextArea" style="width:100%; height:100%;">
+                </textarea>
+                            </div>
+
+                            <div class="ConditionClass TabClass " id="DataContainer">
+                                <h3>Data Restrictions</h3>
+                                <!-- <textarea readonly class="form-control" id="ConditionsTextArea" style="width:100%; height:100%;"> -->
+                                <ul style="font-size: 1.2em; margin-bottom: 1em;">
+                                    <li>All strings must be enclosed within quotes</li>
+                                    <li>All Numbers must be plain (Without quotes) (For algorithm purpose)</li>
+                                    <li>Number of properties accepted thos Stack Bar - 2 to 6</li>
+                                    <li>Each object in the Data must be consistent (Same keys pairs)</li>
+                                    <li>All Keys must be strings enclosed within quotes</li>
+                                    <li>Atleast one property must be a string (for X Axis)</li>
+                                </ul>
+                                <!-- </textarea> -->
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-2"">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <script>
+                $(document).ready(function () {
+
+                    console.log("Jquery working");
+
+                    $("#GraphTab").addClass("active");
+                    plotGraph(false);
+                    plotGraph(true);
+
+                    $(".GraphClass").show();
+                    $(".DataClass").hide();
+                    $(".ConditionClass").hide();
+
+                    $("#GraphTab").click(function () {
+
+                        console.log("Clicked Graph Tab");
+
+                        if ($('#GraphTab').attr('class') != "active") {
+                            plotGraph(true);
+                        }
+
+                        $(this).addClass("active");               //On click, Set the tab on active and remove other tabs with active
+                        $("#DataTab").removeClass("active");
+                        $("#ConditionTab").removeClass("active");
+
+                        $(".GraphClass").show();
+                        $(".DataClass").hide();
+                        $(".ConditionClass").hide();
+
+                    });
+
+                    $("#DataTab").click(function () {
+
+                        console.log("Clicked Data Tab");
+
+                        $(this).addClass("active");
+                        $("#GraphTab").removeClass("active");
+                        $("#ConditionTab").removeClass("active");
+
+                        $(".DataClass").show();
+                        $(".GraphClass").hide();
+                        $(".ConditionClass").hide();
+                        plotGraph(false);
+
+                    });
+
+                    $("#ConditionTab").click(function () {
+
+                        console.log("Clicked Condition Tab");
+
+                        $(this).addClass("active");
+                        $("#GraphTab").removeClass("active");
+                        $("#DataTab").removeClass("active");
+
+                        $(".ConditionClass").show();
+                        $(".DataClass").hide();
+                        $(".GraphClass").hide();
+                        plotGraph(false);
+
+                    });
+
+
+                });
+            </script>
+</body>
+
+</html>
