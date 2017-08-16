@@ -6,12 +6,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
     <link rel = "stylesheet" type = "text/css"   href="../../public/stylesheets/style.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
     <%  var graphsIsActive = "";
         var validateIsActive = "";
+        var collectionActive = "";
     %> 
         <!--Check data var from inocming page and set active or not -->
 <nav class="navbar navbar-inverse">
@@ -46,6 +47,15 @@
                     <a href="/graphs">
                         <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;
                         Graph me
+                    </a>
+                </li>
+                <% if(data == "CollectionPage"){
+                    collectionActive = "active"; 
+                } %>
+                <li class= <%= collectionActive%>>
+                    <a href="/graphCollection">
+                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;
+                        Graphs Album
                     </a>
                 </li>
             </ul>

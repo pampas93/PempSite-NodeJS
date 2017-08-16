@@ -10,6 +10,9 @@ var users = require('./routes/users');
 var val = require('./routes/validate');
 var graphs = require('./routes/graphs');
 var mychart = require('./routes/mychart');
+var collection = require('./routes/graphCollection');
+
+var BarTemplate1 = require('./routes/GraphSamplesRoutes/BarTemplate1');
 
 var app = express();
 
@@ -44,6 +47,9 @@ app.use('/users', users);
 app.use('/validate', val);
 app.use('/graphs',graphs);
 app.use('/mychart', mychart)
+app.use('/graphCollection', collection )
+
+app.use('/GraphSamples/BarTemplate1', BarTemplate1);
 
 //app.listen(3000);                                             //Need to remove later. Only for debugging purpose, so I can run program from node app.js command
 
