@@ -1,17 +1,46 @@
 body {
-  padding: 50px;
-}
-
-.dummy {
-    margin-top: 100%;
-}
-
-.thumbnail {
+    padding: 50px;
+  }
+  
+.tile {
+    position: relative;
+    top: 15px;
+      bottom: 0;
+      left: 15px;
+      right: 0;
+      text-align:center;
+      padding-top:calc(20% - 30px);
+  }
+  
+  .image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .overlay {
     position: absolute;
     top: 15px;
-    bottom: 0;
-    left: 15px;
-    right: 0;
-    text-align:center;
-    padding-top:calc(50% - 30px);
-}
+    height: 95%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #D3D3D3;
+  }
+  
+  .tile:hover .overlay {
+    opacity: 0.9;
+  }
+  
+  .text {
+    color: #606060;
+    font-size: 50px;
+    font-family: system-ui;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }

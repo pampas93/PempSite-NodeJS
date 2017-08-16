@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Plotify</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <% var data= "graphPage" %>
+
+<head>
+  <title>Plotify</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <% var data= "graphPage" %>
     <% include templates/navigation.ejs %>
-    <br>
-    <h1>Find your perfect graph</h1>
-    <br><br>
-    <form id="dataUpload" method="post" action="/graphs">
+      <br>
+      <h1>Find your perfect graph</h1>
+      <br><br>
+      <form id="dataUpload" method="post" action="/graphs">
         <div class="form-group">
-            <label for="jsondata">Enter Data:</label>
-            <textarea class="form-control" id="jsondata" rows="20" name="datatextarea"><%= json %></textarea>
-            <br>
-            <input class="btn btn-primary" type="submit" value="Submit"/>
+          <label for="jsondata">Enter Data:</label>
+          <textarea class="form-control" id="jsondata" rows="20" name="datatextarea"><%= json %></textarea>
+          <br>
+          <input class="btn btn-primary" type="submit" value="Submit" />
         </div>
-    </form>
-    <h3>Status: <%= status %></h3><br>
-    <% if(compatibility) { %>
-    <form id="getChart" method="post" action="/mychart">
-        <div class="form-group">
-          <textarea class="form-control" id="jsondata" rows="2" name="jsontext" style="display:none;"><%= json %></textarea>
-          <% var graphTypes = graphs.split("$");
+      </form>
+      <% if(status) { %>
+      <% if(!compatibility) { %>
+        <div class="alert alert-warning">
+          <h3><strong>Status: </strong><%= status %></h3><br>
+        </div>
+      <% } else { %>
+        <div class="alert alert-success">
+            <h3><strong>Wooot! Status: </strong><%= status %></h3><br>
+          </div>
+          <form id="getChart" method="post" action="/mychart">
+            <div class="form-group">
+              <textarea class="form-control" id="jsondata" rows="2" name="jsontext" style="display:none;"><%= json %></textarea>
+              <% var graphTypes = graphs.split("$");
             for(var temp in graphTypes){
             console.log(graphTypes[temp]); %>
-          <div class="radio">
-            <label><input type="radio" name="graphType" value="<%= graphTypes[temp] %>"><%= graphTypes[temp] %></label>
-          </div>
-          <% } %>
-          <input class="btn btn-primary" type="submit" value="Submit"/>
-        </div>
-    </form>
-    <% } %>
-    
-  </body>
+                <div class="radio">
+                  <label><input type="radio" name="graphType" value="<%= graphTypes[temp] %>"><%= graphTypes[temp] %></label>
+                </div>
+                <% } %>
+                  <input class="btn btn-primary" type="submit" value="Submit" />
+            </div>
+          </form>
+      <% } %>
+      <% } %>
+
+</body>
+
 </html>
