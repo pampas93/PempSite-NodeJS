@@ -4,47 +4,82 @@
 <head>
   <title>Plotify</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  <style>
+    h1 {
+      text-align: center
+    }
+
+    .secondForm{
+      padding-top: 20px;
+      padding-left: 30px;
+    }
+    .radio{
+      padding-left: 20px;
+    }
+  </style>
 </head>
 
 <body>
   <% var data= "graphPage" %>
     <% include templates/header.ejs %>
-      <br>
-      <h1>Find your perfect graph</h1>
-      <br><br>
-      <form id="dataUpload" method="post" action="/graphs">
-        <div class="form-group">
-          <label for="jsondata">Enter Data:</label>
-          <textarea class="form-control" id="jsondata" rows="45" name="datatextarea"><%= json %></textarea>
-          <br>
-          <input class="btn btn-primary" type="submit" value="Submit" />
-        </div>
-      </form>
-      <% if(status) { %>
-      <% if(!compatibility) { %>
-        <div class="alert alert-warning">
-          <h3><strong>Status: </strong><%= status %></h3><br>
-        </div>
-      <% } else { %>
-        <div class="alert alert-success">
-            <h3><strong>Wooot! Status: </strong><%= status %></h3><br>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-1 col-md-1 col-lg-2">
           </div>
-          <form id="getChart" method="post" action="/mychart">
-            <div class="form-group">
-              <textarea class="form-control" id="jsondata" rows="2" name="jsontext" style="display:none;"><%= json %></textarea>
-              <% var graphTypes = graphs.split("$");
-            for(var temp in graphTypes){
-            console.log(graphTypes[temp]); %>
-                <div class="radio">
-                  <label><input type="radio" name="graphType" value="<%= graphTypes[temp] %>"><%= graphTypes[temp] %></label>
+
+          <div class="col-sm-10 col-md-10 col-lg-8">
+
+            <h1><b>Find your Perfect graph</b></h1>
+            <br><br>
+            <form id="dataUpload" method="post" action="/graphs">
+              <div class="form-group">
+                <label for="jsondata">Enter Data:</label>
+                <textarea class="form-control" id="jsondata" rows="30" name="datatextarea"><%= json %></textarea>
+                <br>
+                <input class="btn btn-primary" type="submit" value="Submit" />
+              </div>
+            </form>
+            <% if(status) { %>
+              <% if(!compatibility) { %>
+                <div class="alert alert-warning">
+                  <h3><strong>Status: </strong>
+                    <%= status %>
+                  </h3><br>
                 </div>
+                <% } else { %>
+                  <div class="alert alert-success">
+                    <h3><strong>Wooot! Status: </strong>
+                      <%= status %>
+                    </h3>
+                  </div>
+
+                  <div class="secondForm">
+                    <h3> <b>Choose your Graph : </b> </h3><br>
+                    <form id="getChart" method="post" action="/mychart">
+                      <div class="form-group">
+                        <textarea class="form-control" id="jsondata" rows="2" name="jsontext" style="display:none;"><%= json %></textarea>
+                        <% var graphTypes = graphs.split("$");
+                          for(var temp in graphTypes){  %>
+                          <div class="radio">
+                            <label><input type="radio" name="graphType" value="<%= graphTypes[temp] %>"><h4><%= graphTypes[temp] %></h4></label>
+                          </div>
+                          <% } %>
+                          <br>
+                            <input class="btn btn-primary" type="submit" value="Plot Graph">
+                      </div>
+                    </form>
+                  </div>
                 <% } %>
-                  <input class="btn btn-primary" type="submit" value="Submit" />
-            </div>
-          </form>
-      <% } %>
-      <% } %>
-      
+            <% } %>
+
+          </div>
+
+          <div class="col-sm-1 col-md-1 col-lg-2">
+          </div>
+        </div>
+      </div>
+
 
       <% include templates/footer.ejs %>
 </body>

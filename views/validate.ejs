@@ -4,24 +4,53 @@
 <head>
   <title>JSON Validate</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <style>
+    h1{text-align: center}
+  </style>
 </head>
 
 <body>
   <% var data= "validatePage" %>
     <% include templates/header.ejs %>
-      <h1>Validate my JSON</h1>
-      <br><br>
-      <form id="jsonUpload" method="post" action="/validate">
-        <div class="form-group">
-          <label for="json">Enter Json:</label>
-          <textarea class="form-control" id="json" rows="20" name="jsontextarea"><%= json %></textarea>
-          <br>
-          <input class="btn btn-primary" type="submit" value="Submit" />
-          <h2>
-            <%= status %>
-          </h2>
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-1 col-md-1 col-lg-2">
+          </div>
+
+          <div class="col-sm-10 col-md-10 col-lg-8">
+
+            <h1><b>Validate my JSON Dataset</b></h1>
+            <br><br>
+
+            <form id="jsonUpload" method="post" action="/validate">
+              <div class="form-group">
+                <label for="json">Enter Json:</label>
+                <textarea class="form-control" id="json" rows="20" name="jsontextarea"><%= json %></textarea>
+                <br>
+                <input class="btn btn-primary" type="submit" value="Submit" />
+                <br><br><br>
+                <% if(json) {
+                    if(status){ %>
+                  <div class="alert alert-success">
+                      <h3><strong>Status: </strong>Awesome! It's a Valid JSON data</h3><br>
+                  </div>
+                <% } else{ %>
+                  <div class="alert alert-warning">
+                      <h3><strong>Status: </strong>Sorry, It wasn't a valid JSON </h3><br>
+                  </div>
+                <% } } %>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-sm-1 col-md-1 col-lg-2">
+          </div>
         </div>
-      </form>
+      </div>
+      <!--  End of Container -->
+
       <% include templates/footer.ejs %>
 </body>
 

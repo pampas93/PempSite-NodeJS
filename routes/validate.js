@@ -9,15 +9,15 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next){
   var jsonString = req.body.jsontextarea;
 
-  var validity = "";
+  var validity = false;
   if(isJson(jsonString)){
-    validity = "Valid Json! Woot woot";
+    validity = true;
     
     try{
     jsonString = JSON.stringify(eval("(" + jsonString + ")"), null, "\t");  //To display json in proper indenting
     }catch(e){ }
   }else{
-    validity = "Sorry, not a valid json";
+    validity = false;
   }
   
   res.render('validate', { status: validity, json: jsonString });

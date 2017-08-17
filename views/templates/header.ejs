@@ -60,14 +60,15 @@
                     </div>
                     <div id="navbar3" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
+                            <% if(data == "graphPage"){
+                                graphsIsActive = "active"; 
+                            } %>
+                            <li class= <%= graphsIsActive%>><a href="/graphs" style="color:white;"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;Graph Data</a></li>
                             <% if(data == "validatePage"){
                                 validateIsActive = "active"; 
                             } %>
                             <li class= <%= validateIsActive%>><a href="/validate" style="color:white;"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;Validate JSON</a></li>
-                            <% if(data == "graphPage"){
-                                graphsIsActive = "active"; 
-                            } %>
-                            <li class= <%= graphsIsActive%>><a href="/graphs" style="color:white;"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;Graph Me</a></li>
+                            
                             <% if(data == "CollectionPage"){
                                 collectionActive = "active"; 
                             } %>
