@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Plotify ME</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <% var data= "DeveloperPage" %>
+        <% include templates/header.ejs %>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1 col-lg-1">
+                    </div>
+
+                    <div class="col-sm-10 col-md-10 col-lg-8" style="min-height:600px;text-align:center;">
+
+                        <h1><b>Architects of PlotifyMe</b></h1>
+                        <br>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="padding:40px;"><img src="/images/abhi.png" alt="Abhijit Srikanth"></td>
+                                <td style="padding:40px;"><img src="/images/sunaina.png" alt="Sunaina B"></td>
+                            </tr><br>
+                            <tr>
+                                <td style="padding-bottom:20px;">
+                                    <h2><b>Abhijit Srikanth</b></h2>
+                                </td>
+                                <td style="padding-bottom:20px;">
+                                    <h2><b>Sunaina B</b></h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom:30px;">
+                                    <h3><b>Syracuse University, NY</b></h3>
+                                </td>
+                                <td style="padding-bottom:30px;">
+                                    <h3><b>Arizona State University, AZ</b></h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom:30px;">
+                                    <a href="https://github.com/pampas93"><i class="fa fa-github-square fa-4x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;<a href="https://www.linkedin.com/in/abhijit-srikanth/"><i class="fa fa-linkedin-square fa-4x" aria-hidden="true">
+                                </td>
+                                <td style="padding-bottom:30px;">
+                                    <a href="https://github.com/sunainab94"><i class="fa fa-github-square fa-4x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;<a href="https://www.linkedin.com/in/sunainab/"><i class="fa fa-linkedin-square fa-4x" aria-hidden="true">
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                    <div class="col-sm-1 col-md-1 col-lg-1">
+                    </div>
+                </div>
+            </div>
+            <!--  End of Container -->
+
+            <% include templates/footer.ejs %>
+</body>
+
+</html>

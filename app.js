@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var val = require('./routes/validate');
 var graphs = require('./routes/graphs');
 var mychart = require('./routes/mychart');
+var dev = require('./routes/developers');
 var collection = require('./routes/graphCollection');
 
 var BarTemplate1 = require('./routes/GraphSamplesRoutes/BarTemplate1');
@@ -49,6 +50,7 @@ app.use('/validate', val);
 app.use('/graphs',graphs);
 app.use('/mychart', mychart)
 app.use('/graphCollection', collection )
+app.use('/developers', dev)
 
 app.use('/GraphSamples/BarTemplate1', BarTemplate1);
 app.use('/GraphSamples/StackBarTemplate', StackBarTemplate);

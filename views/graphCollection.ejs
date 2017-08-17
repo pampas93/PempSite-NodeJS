@@ -5,49 +5,66 @@
   <title>Graph Collection</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/graphCollection.css' />
+
+  <style>
+      h1{text-align: center}
+    </style>
 </head>
 
 <body>
   <% var data= "CollectionPage" %>
     <% include templates/header.ejs %>
-      <h1>All Graphs in our Database</h1>
 
       <div class="container">
         <div class="row">
-
-          <div class="col-md-4 col-sm-6 col-xs-6">
-            <div class="tile">
-              <img src="/images/GraphSamples/BarType1.jpg" class="image">
-              <div class="overlay">
-                <a href="GraphSamples/BarTemplate1" class="purple text">Bar-Graph Type1</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-6">
-            <div class="tile">
-              <img src="/images/GraphSamples/StackBar.jpg" class="image">
-              <div class="overlay">
-                <a href="GraphSamples/StackBarTemplate" class="purple text">Stack Bar Graph</a>
-              </div>
-            </div>
+          <div class="col-sm-1 col-md-1 col-lg-1">
           </div>
 
+          <div class="col-sm-10 col-md-10 col-lg-10">
 
+            <h1><b>Our Graph Collection</b></h1>
+            <br><br>
+
+            <div class="container" style="min-height:600px;">
+              <div class="row">
+                
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                  <div class="tile">
+                    <img src="/images/GraphSamples/BarType1.jpg" class="image">
+                    <div class="overlay">
+                      <a href="GraphSamples/BarTemplate1" class="purple text">Bar Graph (type1)</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                  <div class="tile">
+                    <img src="/images/GraphSamples/StackBar.jpg" class="image">
+                    <div class="overlay">
+                      <a href="GraphSamples/StackBarTemplate" class="purple text">Stack Bar Graph</a>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-sm-1 col-md-1 col-lg-1">
+          </div>
         </div>
-
-
       </div>
 
       <% include templates/footer.ejs %>
 
 
-      <!-- JQuery scripting for modal bootstrap-->
+        <!-- JQuery scripting for modal bootstrap-->
 
-      <script>
-        $(document).ready(function () {
+        <script>
+          $(document).ready(function () {
 
-        });
-      </script>
+          });
+        </script>
 
 </body>
 

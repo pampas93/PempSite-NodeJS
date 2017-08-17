@@ -36,9 +36,9 @@
         <% include ../templates/header.ejs %>
 
             <ul class="nav nav-tabs" style="text-align:center; margin-top: 50px; padding:10px; font-size: 1.2em;">
-                <li class="active" id="GraphTab" style=" float:none;display:inline-block; padding:5px;"><a href="#"><b>Graph Template</b></a></li>
-                <li id="DataTab" style=" float:none;display:inline-block; padding:5px;"><a href="#"><b>Sample Data</b></a></li>
-                <li id="ConditionTab" style=" float:none;display:inline-block; padding:5px;"><a href="#"><b>Data Restrictions</b></a></li>
+                <li class="active" id="GraphTab" style=" float:none;display:inline-block; padding:5px;"><a href="#" style="color: black;"><b>Graph Template</b></a></li>
+                <li id="DataTab" style=" float:none;display:inline-block; padding:5px;"><a href="#" style="color: black;"><b>Sample Data</b></a></li>
+                <li id="ConditionTab" style=" float:none;display:inline-block; padding:5px;"><a href="#" style="color: black;"><b>Data Restrictions</b></a></li>
             </ul>
 
             <div class="container-fluid">
@@ -50,6 +50,7 @@
                         <div class="insideContainer">
 
                             <div class="GraphClass TabClass text-center">
+                                <h2><b>Stack Bar Graph</b></h2><br>
                                 <script type="text/javascript">
                                     var data = [{
                                         "Name": "John",
@@ -297,7 +298,7 @@
                 </div>
             </div>
 
-            <% include templates/footer.ejs %>
+            <% include ../templates/footer.ejs %>
                 <script>
                                     $(document).ready(function () {
 

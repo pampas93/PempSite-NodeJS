@@ -1,32 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>My Chart</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href="<%= cssFile %>" />
 
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-  
-  </head>
-  <body>
-    <% var data= "myChartPage" %>  
+<head>
+  <title>My Chart</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href="<%= cssFile %>" />
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+  <style>
+    h1{
+      text-align: center
+    }
+
+    .graphDiv{
+      height: 650px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <% var data= "myChartPage" %>
     <% include templates/header.ejs %>
-    <h2><%= ChartTitle%> </h2>
-    
-    <p id="data" style="display:none;">
-      <%= jsonData %>
-    </p>
+      
 
-    <p id="axis" style="display:none;">
-      <%= axis %>
-    </p>
-    
-    <div class="GraphClass">
-	    <script type="text/javascript" src=" <%= jsFile%> "></script>
-    </div>
+      <p id="data" style="display:none;">
+        <%= jsonData %>
+      </p>
 
-    <% include templates/footer.ejs %>
+      <p id="axis" style="display:none;">
+        <%= axis %>
+      </p>
 
-  </body>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-1 col-md-1 col-lg-1">
+          </div>
+
+          <div class="col-sm-10 col-md-10 col-lg-10" style="min-height:700px;">
+              <h1> <b><%= ChartTitle%> </b> </h1> <br>
+
+            <div class="GraphClass" >
+              <script type="text/javascript" src=" <%= jsFile%> "></script>
+            </div>
+
+          </div>
+
+          <div class="col-sm-1 col-md-1 col-lg-1">
+          </div>
+        </div>
+      </div>
+      <!--  End of Container -->
+
+      <% include templates/footer.ejs %>
+
+</body>
+
 </html>
