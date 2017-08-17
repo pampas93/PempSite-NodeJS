@@ -1,0 +1,88 @@
+<head>
+    <meta charset="UTF-8">
+    <!-- Loads the path to static files -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/stylesheets/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .topNavigator {
+            padding: 50px 150px 50px 150px;
+        }
+
+        .navbar-brand {
+            height: 60px;
+        }
+
+        .nav>li>a {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 30px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .navbar-toggle {
+            padding: 10px;
+            margin: 25px 15px 25px 0;
+        }
+
+        .navbar {
+            background-color: #183f5e;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <%  var graphsIsActive = "";
+    var validateIsActive = "";
+    var collectionActive = "";   
+    var developerActive = "" %>
+
+        <div class="topNavigator">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                        <a class="navbar-brand" href="/"><img src="/images/plotifyme.png" alt="Plotify">
+                      </a>
+                    </div>
+                    <div id="navbar3" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <% if(data == "validatePage"){
+                                validateIsActive = "active"; 
+                            } %>
+                            <li class= <%= validateIsActive%>><a href="/validate" style="color:white;"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;Validate JSON</a></li>
+                            <% if(data == "graphPage"){
+                                graphsIsActive = "active"; 
+                            } %>
+                            <li class= <%= graphsIsActive%>><a href="/graphs" style="color:white;"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>&nbsp;Graph Me</a></li>
+                            <% if(data == "CollectionPage"){
+                                collectionActive = "active"; 
+                            } %>
+                            <li class= <%= collectionActive%>><a href="/graphCollection" style="color:white;"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;Graph Collection</a></li>
+                            <% if(data == "DeveloperPage"){
+                                developerActive = "active"; 
+                            } %>
+                            <li class= <%= developerActive%>><a href="#" style="color:white;">Developers</a></li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+                <!--/.container-fluid -->
+            </nav>
+        </div>
+
+
+</body>

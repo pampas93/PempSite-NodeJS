@@ -8,14 +8,14 @@
 
 <body>
   <% var data= "graphPage" %>
-    <% include templates/navigation.ejs %>
+    <% include templates/header.ejs %>
       <br>
       <h1>Find your perfect graph</h1>
       <br><br>
       <form id="dataUpload" method="post" action="/graphs">
         <div class="form-group">
           <label for="jsondata">Enter Data:</label>
-          <textarea class="form-control" id="jsondata" rows="20" name="datatextarea"><%= json %></textarea>
+          <textarea class="form-control" id="jsondata" rows="45" name="datatextarea"><%= json %></textarea>
           <br>
           <input class="btn btn-primary" type="submit" value="Submit" />
         </div>
@@ -44,7 +44,9 @@
           </form>
       <% } %>
       <% } %>
+      
 
+      <% include templates/footer.ejs %>
 </body>
 
 </html>

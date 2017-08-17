@@ -33,7 +33,7 @@
 
 <body>
     <% var data= "StackBar-Template" %>
-        <% include ../templates/navigation.ejs %>
+        <% include ../templates/header.ejs %>
 
             <ul class="nav nav-tabs" style="text-align:center; margin-top: 50px; padding:10px; font-size: 1.2em;">
                 <li class="active" id="GraphTab" style=" float:none;display:inline-block; padding:5px;"><a href="#"><b>Graph Template</b></a></li>
@@ -297,8 +297,8 @@
                 </div>
             </div>
 
-
-            <script>
+            <% include templates/footer.ejs %>
+                <script>
                                     $(document).ready(function () {
 
                                         console.log("Jquery working ");
@@ -361,7 +361,7 @@
 
 
                                     });
-            </script>
+                </script>
 </body>
 
 </html>

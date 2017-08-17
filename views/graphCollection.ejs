@@ -3,12 +3,13 @@
 
 <head>
   <title>Graph Collection</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/graphCollection.css' />
 </head>
 
 <body>
   <% var data= "CollectionPage" %>
-    <% include templates/navigation.ejs %>
+    <% include templates/header.ejs %>
       <h1>All Graphs in our Database</h1>
 
       <div class="container">
@@ -37,7 +38,7 @@
 
       </div>
 
-
+      <% include templates/footer.ejs %>
 
 
       <!-- JQuery scripting for modal bootstrap-->

@@ -28,7 +28,7 @@ var tip = d3.tip()
     return "<strong>"+axisItems.y+":</strong> <span style='color:red'>" + d[axisItems.y] + "</span>";
   })
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(".GraphClass").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

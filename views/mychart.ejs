@@ -11,7 +11,7 @@
   </head>
   <body>
     <% var data= "myChartPage" %>  
-    <% include templates/navigation.ejs %>
+    <% include templates/header.ejs %>
     <h2><%= ChartTitle%> </h2>
     
     <p id="data" style="display:none;">
@@ -22,9 +22,11 @@
       <%= axis %>
     </p>
     
-    <div>
+    <div class="GraphClass">
 	    <script type="text/javascript" src=" <%= jsFile%> "></script>
     </div>
+
+    <% include templates/footer.ejs %>
 
   </body>
 </html>
