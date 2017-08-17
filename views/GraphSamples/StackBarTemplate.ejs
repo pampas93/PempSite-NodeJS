@@ -272,8 +272,7 @@
                             </div>
 
                             <div class="DataClass TabClass " id="DataContainer">
-                                <textarea readonly class="form-control" id="DataTextArea" style="width:100%; height:100%;">
-                </textarea>
+                                <textarea readonly class="form-control" id="DataTextArea" style="width:100%; height:100%;"></textarea>
                             </div>
 
                             <div class="ConditionClass TabClass " id="DataContainer">
@@ -292,7 +291,7 @@
 
                         </div>
                     </div>
-                    <div class="col-sm-1 col-md-1 col-lg-2"">
+                    <div class="col-sm-1 col-md-1 col-lg-2">
 
                     </div>
                 </div>
@@ -300,68 +299,68 @@
 
 
             <script>
-                $(document).ready(function () {
+                                    $(document).ready(function () {
 
-                    console.log("Jquery working");
+                                        console.log("Jquery working ");
 
-                    $("#GraphTab").addClass("active");
-                    plotGraph(false);
-                    plotGraph(true);
+                                        $("#GraphTab ").addClass("active ");
+                                        plotGraph(false);
+                                        plotGraph(true);
 
-                    $(".GraphClass").show();
-                    $(".DataClass").hide();
-                    $(".ConditionClass").hide();
+                                        $(".GraphClass ").show();
+                                        $(".DataClass ").hide();
+                                        $(".ConditionClass ").hide();
 
-                    $("#GraphTab").click(function () {
+                                        $("#GraphTab ").click(function () {
 
-                        console.log("Clicked Graph Tab");
+                                            console.log("Clicked Graph Tab ");
 
-                        if ($('#GraphTab').attr('class') != "active") {
-                            plotGraph(true);
-                        }
+                                            if ($('#GraphTab').attr('class') != "active ") {
+                                                plotGraph(true);
+                                            }
 
-                        $(this).addClass("active");               //On click, Set the tab on active and remove other tabs with active
-                        $("#DataTab").removeClass("active");
-                        $("#ConditionTab").removeClass("active");
+                                            $(this).addClass("active ");               //On click, Set the tab on active and remove other tabs with active
+                                            $("#DataTab ").removeClass("active ");
+                                            $("#ConditionTab ").removeClass("active ");
 
-                        $(".GraphClass").show();
-                        $(".DataClass").hide();
-                        $(".ConditionClass").hide();
+                                            $(".GraphClass ").show();
+                                            $(".DataClass ").hide();
+                                            $(".ConditionClass ").hide();
 
-                    });
+                                        });
 
-                    $("#DataTab").click(function () {
+                                        $("#DataTab ").click(function () {
 
-                        console.log("Clicked Data Tab");
+                                            console.log("Clicked Data Tab ");
 
-                        $(this).addClass("active");
-                        $("#GraphTab").removeClass("active");
-                        $("#ConditionTab").removeClass("active");
+                                            $(this).addClass("active ");
+                                            $("#GraphTab ").removeClass("active ");
+                                            $("#ConditionTab ").removeClass("active ");
 
-                        $(".DataClass").show();
-                        $(".GraphClass").hide();
-                        $(".ConditionClass").hide();
-                        plotGraph(false);
+                                            $(".DataClass ").show();
+                                            $(".GraphClass ").hide();
+                                            $(".ConditionClass ").hide();
+                                            plotGraph(false);
 
-                    });
+                                        });
 
-                    $("#ConditionTab").click(function () {
+                                        $("#ConditionTab ").click(function () {
 
-                        console.log("Clicked Condition Tab");
+                                            console.log("Clicked Condition Tab ");
 
-                        $(this).addClass("active");
-                        $("#GraphTab").removeClass("active");
-                        $("#DataTab").removeClass("active");
+                                            $(this).addClass("active ");
+                                            $("#GraphTab ").removeClass("active ");
+                                            $("#DataTab ").removeClass("active ");
 
-                        $(".ConditionClass").show();
-                        $(".DataClass").hide();
-                        $(".GraphClass").hide();
-                        plotGraph(false);
+                                            $(".ConditionClass ").show();
+                                            $(".DataClass ").hide();
+                                            $(".GraphClass ").hide();
+                                            plotGraph(false);
 
-                    });
+                                        });
 
 
-                });
+                                    });
             </script>
 </body>
 
